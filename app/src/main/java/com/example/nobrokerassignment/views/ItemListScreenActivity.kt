@@ -3,8 +3,11 @@ package com.example.nobrokerassignment.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +33,7 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
     private var itemList = listOf<ItemListModelItem>()
     private lateinit var itemListAdapter: ItemListAdapter
     private var entityList = mutableListOf<ItemEntity>()
+    var search = "title"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +41,8 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
         binding = ActivityItemListScreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.title = "Item List Screem"
 
 
         val app = application as ItemApplication
@@ -50,6 +56,30 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
         binding.rvItemList.layoutManager = LinearLayoutManager(this)
         itemListAdapter = ItemListAdapter(entityList, this@ItemListScreenActivity, this)
         binding.rvItemList.adapter = itemListAdapter
+
+        binding.etSearchItem.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(input: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
+                search = if (input!!.isNotEmpty()) {
+                    input.toString()
+                } else {
+                    "title"
+                }
+                viewModel.getSearchItem(search).observe(this@ItemListScreenActivity, {
+                    entityList.clear()
+                    entityList.addAll(it)
+                    itemListAdapter.notifyDataSetChanged()
+                })
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
 
 
         viewModel.getItemList().observe(this, Observer {
@@ -90,6 +120,8 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
             }
         })
     }
+
+
 
     override fun onItemClicked(itemEntity: ItemEntity) {
         val intent = Intent(this, ItemDetailScreenActivity::class.java)

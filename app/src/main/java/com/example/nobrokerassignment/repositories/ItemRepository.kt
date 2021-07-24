@@ -20,4 +20,9 @@ class ItemRepository(
             itemListDao.addItem(itemListEntity)
         }
     }
+
+    fun getSearchItem(search : String): LiveData<List<ItemEntity>> {
+        return itemListDao.getSearchItem(search)
+    }
+
 }

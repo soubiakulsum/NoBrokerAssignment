@@ -13,7 +13,6 @@ class ItemEntity(
     @ColumnInfo(name = "title") var title: String?,
     @ColumnInfo(name = "subTitle") var subTitle: String?,
     @ColumnInfo(name = "image") var image: String?,
-//    @ColumnInfo(name = "search") var search: String?
 
 
 ) : Serializable {

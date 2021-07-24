@@ -16,5 +16,9 @@ class ItemViewModel(private val itemListRepository: ItemRepository) : ViewModel(
         itemListRepository.addItem(itemListEntity)
     }
 
+    fun getSearchItem(search : String): LiveData<List<ItemEntity>> {
+        return itemListRepository.getSearchItem(search)
+    }
+
 
 }
