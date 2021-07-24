@@ -4,17 +4,18 @@
     android:id="@+id/cvItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_10sdp"
+    android:layout_margin="@dimen/_20sdp"
     android:elevation="@dimen/_20sdp"
     app:cardCornerRadius="@dimen/_20sdp"
     app:cardMaxElevation="@dimen/_20sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivItemImage"
+            android:background="@color/colorGrey"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_margin="@dimen/_20sdp"
@@ -25,10 +26,9 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
+            android:background="@color/colorGrey"
             android:layout_height="wrap_content"
-           android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="title"
+            android:layout_margin="@dimen/_20sdp"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/ivItemImage"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,14 +36,15 @@
         <TextView
             android:id="@+id/tvDesc"
             android:layout_width="0dp"
+            android:background="@color/colorGrey"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
+            android:ellipsize="end"
+            android:gravity="start"
             android:maxLines="2"
-            android:text="desc"
             android:textAlignment="textStart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintStart_toEndOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
 

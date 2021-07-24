@@ -7,19 +7,19 @@ import androidx.room.RoomDatabase
 
 
 @Database(entities = [ItemEntity::class], version = 1)
-abstract class ItemListDb : RoomDatabase() {
+abstract class ItemDb : RoomDatabase() {
 
-    abstract fun getItemListDao(): ItemListDao
+    abstract fun getItemListDao(): ItemDao
 
     companion object {
-        private var INSTANCE: ItemListDb? = null
+        private var INSTANCE: ItemDb? = null
 
-        fun getDbContext(context: Context): ItemListDb {
+        fun getDbContext(context: Context): ItemDb {
             return if (INSTANCE == null) {
                 val builder =
                     Room.databaseBuilder(
                         context.applicationContext,
-                        ItemListDb::class.java,
+                        ItemDb::class.java,
                         "foodDB"
                     )
                         .fallbackToDestructiveMigration()

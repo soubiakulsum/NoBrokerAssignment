@@ -1,14 +1,14 @@
 package com.example.nobrokerassignment.repositories
 
 import androidx.lifecycle.LiveData
-import com.example.nobrokerassignment.room.ItemListDao
+import com.example.nobrokerassignment.room.ItemDao
 import com.example.nobrokerassignment.room.ItemEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ItemListRepository(
-    private val itemListDao: ItemListDao
+class ItemRepository(
+    private val itemListDao: ItemDao
 ) {
 
     fun getAllItem(): LiveData<List<ItemEntity>> {
