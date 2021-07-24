@@ -78,4 +78,22 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    android {
+
+        // ...
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    implementation 'com.google.android.material:material:1.2.1'
+
+    implementation 'org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0'
+
+    implementation 'com.airbnb.android:lottie:3.7.2'
+
+
 }

@@ -5,6 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
+/**
+ * generating an annotation for the entity to create a table for all the columns in the
+ * table and generating a respective key.
+ */
 @Entity(tableName = "ItemListTable")
 class ItemEntity(
     @PrimaryKey(autoGenerate = false)

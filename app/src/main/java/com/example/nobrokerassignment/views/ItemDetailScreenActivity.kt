@@ -18,7 +18,9 @@ class ItemDetailScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item_detail_screen)
 
         supportActionBar?.title = "Item Detail Screen"
-
+        /**
+         * getting the data through intent and setting the data.
+         */
         binding = ActivityItemDetailScreenBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)

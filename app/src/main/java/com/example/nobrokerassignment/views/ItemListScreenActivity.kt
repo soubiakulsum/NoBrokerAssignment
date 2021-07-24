@@ -1,13 +1,12 @@
 package com.example.nobrokerassignment.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import com.example.nobrokerassignment.room.ItemApplication
 import com.example.nobrokerassignment.room.ItemEntity
 import com.example.nobrokerassignment.viewModel.ItemViewModel
 import com.example.nobrokerassignment.viewModel.ItemViewModelFactory
-
 import com.example.nobrokerassignment.views.adapter.ItemListAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,7 +28,6 @@ import retrofit2.Response
 class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
 
     private lateinit var binding: ActivityItemListScreenBinding
-    private var itemList = listOf<ItemListModelItem>()
     private lateinit var itemListAdapter: ItemListAdapter
     private var entityList = mutableListOf<ItemEntity>()
     var search = "title"
@@ -42,25 +39,45 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
         val view = binding.root
         setContentView(view)
 
-        supportActionBar?.title = "Item List Screem"
+        supportActionBar?.title = "Item List Screen"
 
+        /**
+         * starting the shimmer animation here
+         */
+        binding.apply {
+            shimmerFrameLayout.startShimmerAnimation()
+        }
 
+        /**
+         * calling repository here to get the itemListRepo from repository class.
+         */
         val app = application as ItemApplication
         val repository = app.itemListRepo
         val viewModelFactory = ItemViewModelFactory(repository)
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(ItemViewModel::class.java)
 
-
+        /**
+         *populating the adapter with the data in the list and binding it to the recycler view
+         */
 
         binding.rvItemList.layoutManager = LinearLayoutManager(this)
         itemListAdapter = ItemListAdapter(entityList, this@ItemListScreenActivity, this)
         binding.rvItemList.adapter = itemListAdapter
 
-        binding.etSearchItem.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(input: CharSequence?, start: Int, count: Int, after: Int) {
+        binding.etSearchItem.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                input: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
 
             }
+
+            /**
+             * searching the title and description here.
+             */
 
             override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
                 search = if (input!!.isNotEmpty()) {
@@ -68,7 +85,9 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
                 } else {
                     "title"
                 }
+
                 viewModel.getSearchItem(search).observe(this@ItemListScreenActivity, {
+
                     entityList.clear()
                     entityList.addAll(it)
                     itemListAdapter.notifyDataSetChanged()
@@ -81,46 +100,50 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
 
         })
 
+        /**
+         * here to observe the data coming from the list and update the view continuously
+         */
 
         viewModel.getItemList().observe(this, Observer {
+            shimmerDisplay()
             entityList.clear()
             entityList.addAll(it)
             itemListAdapter.notifyDataSetChanged()
         })
-
+        /**
+         * call the api here if the list is not empty
+         */
         if (entityList.isEmpty()) {
             callApi(viewModel)
         }
     }
 
     private fun callApi(viewModel: ItemViewModel) {
-        val apiClient = Network.getInstance().create(ApiService::class.java)
-        apiClient.getItemList().enqueue(object : Callback<List<ItemListModelItem>> {
-            override fun onResponse(
-                call: Call<List<ItemListModelItem>>,
-                response: Response<List<ItemListModelItem>>
-            ) {
-                itemList = response.body()!!
-                for (i in itemList.indices) {
-                    val itemEntity =
-                        ItemEntity(
-                            i + 1,
-                            itemList[i].title,
-                            itemList[i].subTitle,
-                            itemList[i].image
-                        )
-                    viewModel.addItem(itemEntity)
-                }
-
-
-            }
-
-            override fun onFailure(call: Call<List<ItemListModelItem>>, t: Throwable) {
-                Toast.makeText(this@ItemListScreenActivity, "Failed", Toast.LENGTH_SHORT).show()
-            }
-        })
+        viewModel.getAllList(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            shimmerFrameLayout.startShimmerAnimation()
+        }
+    }
+
+    private fun shimmerDisplay() {
+        binding.apply {
+            shimmerFrameLayout.stopShimmerAnimation()
+            shimmerFrameLayout.visibility = View.GONE
+            rvItemList.visibility = View.VISIBLE
+        }
+        entityList.clear()
+    }
+
+//    override fun onPause() {
+//        super.onPause()
+//        binding.apply {
+//            shimmerFrameLayout.stopShimmerAnimation()
+//        }
+//    }
 
 
     override fun onItemClicked(itemEntity: ItemEntity) {
