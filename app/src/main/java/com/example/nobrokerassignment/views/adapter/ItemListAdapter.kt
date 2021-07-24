@@ -8,9 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.nobrokerassignment.ItemListModelItem
 import com.example.nobrokerassignment.R
 import com.example.nobrokerassignment.databinding.ItemlistItemLayoutBinding
+import com.example.nobrokerassignment.room.ItemEntity
 import com.example.nobrokerassignment.views.viewholder.ItemListViewHolder
 
-class ItemListAdapter(private val itemList: List<ItemListModelItem>, private var context: Context) :
+class ItemListAdapter(private val itemList: List<ItemEntity>, private var context: Context) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
     inner class ItemListViewHolder(val binding: ItemlistItemLayoutBinding) :
