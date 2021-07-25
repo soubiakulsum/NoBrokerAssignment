@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         /**
-         * holding the splash screen for 10 seconds and then moving o n to the next activity.
+         * holding the splash screen for 10 seconds and then moving on to the next activity.
          */
         Handler().postDelayed({
             val intent = Intent(this, ItemListScreenActivity::class.java)

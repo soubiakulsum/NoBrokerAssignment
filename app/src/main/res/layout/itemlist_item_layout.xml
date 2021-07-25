@@ -2,15 +2,17 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cvItems"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10sdp"
-    android:elevation="@dimen/_20sdp"
+    android:elevation="@dimen/_40sdp"
     app:cardCornerRadius="@dimen/_20sdp"
     app:cardMaxElevation="@dimen/_20sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="match_parent">
 
         <ImageView

@@ -1,6 +1,7 @@
 package com.example.nobrokerassignment.views
 
 import android.content.Intent
+import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,6 +21,8 @@ import com.example.nobrokerassignment.room.ItemEntity
 import com.example.nobrokerassignment.viewModel.ItemViewModel
 import com.example.nobrokerassignment.viewModel.ItemViewModelFactory
 import com.example.nobrokerassignment.views.adapter.ItemListAdapter
+import org.imaginativeworld.oopsnointernet.dialogs.pendulum.NoInternetDialogPendulum
+import org.imaginativeworld.oopsnointernet.dialogs.signal.NoInternetDialogSignal
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +43,32 @@ class ItemListScreenActivity : AppCompatActivity(), ItemClickListener {
         setContentView(view)
 
         supportActionBar?.title = "Item List Screen"
+
+
+        NoInternetDialogSignal.Builder(
+            this,
+            lifecycle
+        ).apply {
+            dialogProperties.apply {
+
+
+                cancelable = true
+                noInternetConnectionTitle = "No Internet"
+                noInternetConnectionMessage =
+                    "Check your Internet connection and try again."
+                showInternetOnButtons = true
+                pleaseTurnOnText = "Please turn on"
+                wifiOnButtonText = "Wifi"
+                mobileDataOnButtonText = "Mobile data"
+
+                onAirplaneModeTitle = "No Internet"
+                onAirplaneModeMessage = "You have turned on the airplane mode."
+                pleaseTurnOffText = "Please turn off"
+                airplaneModeOffButtonText = "Airplane mode"
+                showAirplaneModeOffButtons = true
+            }
+        }.build()
+
 
         /**
          * starting the shimmer animation here

@@ -1,5 +1,7 @@
 package com.example.nobrokerassignment
 
+import com.example.nobrokerassignment.repositories.ItemRepository
+import com.example.nobrokerassignment.viewModel.ItemViewModel
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,4 +16,6 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
 }
